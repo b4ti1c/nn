@@ -8,7 +8,7 @@ class Activation {
     }
 
     toString() {
-        return `Actv Fn - last out: ${this.out.toFixed(2)}`;
+        return this.out ? `Actv Fn - last out: ${this.out.toFixed(2)}` : 'Input';
     }
 }
 

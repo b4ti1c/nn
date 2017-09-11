@@ -1,22 +1,26 @@
-const Serie = require('./serie');
+const Layer = require('./layer');
 
 
 class Net {
     constructor({schema}) {
-        this.series = schema.map(description => new Serie(description));
+        this.layers = schema.map(description => new Layer(description));
     }
 
-
     ignite({input}) {
-        this.out = this.series.reduce((out, serie) => serie.ignite({input: out}), input);
+        this.out = this.layers.reduce((out, layer, index) =>
+            index > 0 ?
+                layer.ignite({input: out}) :
+                layer.halfIgnite({input: out}),
+        input);
+
         return this.out;
     }
 
 
     toString() {
-        return  'Net with ' + this.series.length + ' series: ' +
+        return  'Net with ' + this.layers.length + ' series: ' +
                 '\n-------------------\n' +
-                this.series.join('\n-------------------\n') +
+                this.layers.join('\n-------------------\n') +
                 '\n===================\n';
     }
 }

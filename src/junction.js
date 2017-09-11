@@ -2,7 +2,7 @@
 
 class Junction {
     constructor({numOfInputs}) {
-        this.weights = (new Array(numOfInputs)).fill(0).map(() => Math.random());
+        this.weights = (new Array(numOfInputs)).fill(0).map(() => Math.random() * 2 - 1);
     }
 
     ignite({input}) {
@@ -14,7 +14,7 @@ class Junction {
 
     toString() {
         let str = this.weights.map(weight => weight.toFixed(2)).join(', ');
-        return `Neuron - ${this.weights.length} inputs : ${str} - last out: ${this.out.toFixed(2)}`;
+        return `Neuron - ${this.weights.length} inputs : ${str}${this.out ? ' - last out: ' + this.out.toFixed(2) : ''}`;
     }
 }
 
