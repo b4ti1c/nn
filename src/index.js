@@ -14,7 +14,7 @@ const net = new Net({schema: [
 const trainingData = {input: [1,1,1,1,1,1,1,1,1,1], output: [1, 0, 0, 1]}
 
 for (let i = 0; i < 100; i++)
-    BP.train(net, trainingData.input, trainingData.output, config);
+    BP.train({net, input: trainingData.input, target: trainingData.output, config});
 
 
 //let input = [1,2,3,4,5,6,7,8,9,10];
@@ -23,4 +23,4 @@ let out = net.ignite({input});
 
 console.log(net.toString());
 
-console.log(out);
+console.log(out.map(o => Math.abs(Math.round(o))));

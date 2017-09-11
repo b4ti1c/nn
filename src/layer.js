@@ -3,12 +3,12 @@ const Activation = require('./activation');
 
 
 class Layer {
-    constructor({inputCount, outputCount}) {
+    constructor({inputCount, outputCount, config}) {
         //this.activations = new Serie({type: 'activation', inputCount});
         //this.junctions = new Serie({type: 'junction', inputCount, outputCount});
 
 
-        this.activations = (new Array(inputCount)).fill(0).map(() => new Activation());
+        this.activations = (new Array(inputCount)).fill(0).map(() => new Activation(config));
         this.junctions = (new Array(outputCount)).fill(0).map(() => new Junction({numOfInputs: inputCount}));
     }
 

@@ -1,5 +1,5 @@
 
-module.exports.train = function(net, input, target, config) {
+module.exports.train = function({net, input, target, config}) {
     const layerCount = net.layers.length;
     const sensitivites = {};
 
@@ -19,6 +19,8 @@ module.exports.train = function(net, input, target, config) {
         sensitivites[i] = ithSens;
     }
 
+    let maxGrad = Number.MAX_SAFE_INTEGER;
+
     net.layers.forEach((layer, lIndex) => {
         layer.junctions.forEach((junction, jIndex) => {
             junction.weights.forEach((weight, wIndex) => {
@@ -28,8 +30,12 @@ module.exports.train = function(net, input, target, config) {
 
                 const wGrad = wInput * sensitivites[lIndex + 1][jIndex];
 
+                if (wGrad < maxGrad) maxGrad = wGrad;
+
                 junction.weights[wIndex] -= wGrad * config.learningRate;
             });
         });
     });
+
+    return maxGrad;
 }

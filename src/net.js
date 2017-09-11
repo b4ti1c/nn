@@ -2,8 +2,8 @@ const Layer = require('./layer');
 
 
 class Net {
-    constructor({schema}) {
-        this.layers = schema.map(description => new Layer(description));
+    constructor({schema, config}) {
+        this.layers = schema.map(description => new Layer(description, config));
     }
 
     ignite({input}) {

@@ -1,9 +1,13 @@
-const config = require('./config');
+const CONFIG = require('./config');
 
 
 class Activation {
+    constructor(conf) {
+        this.activationFn = conf ? conf.activation.fn : CONFIG.activation.fn;
+    }
+
     ignite({input}) {
-        this.out = config.activation.fn(input);
+        this.out = this.activationFn(input);
         return this.out;
     }
 
