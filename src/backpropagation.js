@@ -1,5 +1,4 @@
 
-
 module.exports.train = function(net, input, target, config) {
     const layerCount = net.layers.length;
     const sensitivites = {};
@@ -23,7 +22,10 @@ module.exports.train = function(net, input, target, config) {
     net.layers.forEach((layer, lIndex) => {
         layer.junctions.forEach((junction, jIndex) => {
             junction.weights.forEach((weight, wIndex) => {
-                const wInput = lIndex == 0 ? input[wIndex] : layer.activations[wIndex].out;
+                const wInput = junction.weights.length == wIndex + 1 ? 1 :
+                               lIndex == 0 ? input[wIndex] :
+                               layer.activations[wIndex].out;
+
                 const wGrad = wInput * sensitivites[lIndex + 1][jIndex];
 
                 junction.weights[wIndex] -= wGrad * config.learningRate;
